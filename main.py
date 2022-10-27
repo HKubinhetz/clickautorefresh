@@ -22,9 +22,13 @@ pos1y = 15
 pos2x = 5000
 pos2y = 15
 
+x0, y0 = pyautogui.position()
 
 def auto_refresh():
     time.sleep(5)
+
+    # todo - criar uma rotina que configura onde clicar
+    # todo - criar uma rotina para configurar quanto tempo eu quero ter
 
     pyautogui.moveTo(pos1x, pos1y)
     pyautogui.click()
@@ -38,11 +42,15 @@ def auto_refresh():
     time.sleep(300)
 
 
-
 # ---------------------------------------- LAYOUT ---------------------------------------
 sg.theme("GrayGrayGray")
 layout = [[sg.Text("Olá! Este é o atualizador automático do CLICK e do DASH! \n"
-                   "Desenvolvido por Henrique Kubinhetz em Mar 2022 \n")],
+                   "Desenvolvido por Henrique Kubinhetz em Mar 2022 \n"
+                   "e atualizado em Out 2022 \n")],
+          [sg.Text('Coordenadas 1')],
+          [sg.Text('Horizonal'), sg.InputText('1000', size=(6, 3)), sg.Text('Vertical'), sg.InputText('1000', size=(6, 3)), sg.Text(f'Coordenada Horizontal: {x0}', key='mousex')],
+          [sg.Text('Coordenadas 2')],
+          [sg.Text('Horizonal'), sg.InputText('1000', size=(6, 3)), sg.Text('Vertical'), sg.InputText('1000', size=(6, 3)), sg.Text(f'Coordenada Vertical: {y0}', key='mousey')],
           [sg.Button("Rodar", size=(15, 2)), sg.Button("Parar", size=(15, 2)), sg.Button("Fechar", size=(15, 2))]]
 
 # Create the window
@@ -50,8 +58,12 @@ window = sg.Window("CLICK Update", layout)
 
 # Create an event loop
 while True:
-    event, values = window.read()
+    event, values = window.read(timeout=500)
     current_time = time.time()
+    x0, y0 = pyautogui.position()
+    window['mousex'].update(f'Coordenada Horizontal: {x0}')
+    window['mousey'].update(f'Coordenada Vertical: {y0}')
+    window.refresh()
 
     # End program if user closes window or
     # presses the OK button
