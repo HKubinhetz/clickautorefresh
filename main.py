@@ -11,18 +11,14 @@ flag = False
 
 current_time = 0
 start_time = 0
-
-# pos1x = -800
-# pos1y = -130
-# pos2x = 2000
-# pos2y = -130
-
-pos1x = 2000
-pos1y = 15
-pos2x = 5000
-pos2y = 15
-
 x0, y0 = pyautogui.position()
+
+pos1x = 100
+pos1y = 100
+pos2x = 100
+pos2y = 100
+update_timer = 300
+
 
 def auto_refresh():
     time.sleep(5)
@@ -39,7 +35,16 @@ def auto_refresh():
     pyautogui.click()
     pyautogui.press('f5')
 
-    time.sleep(300)
+    time.sleep(update_timer)
+
+
+def update_coordinates(entradas):
+    x1 = int(entradas[0])
+    y1 = int(entradas[1])
+    x2 = int(entradas[2])
+    y2 = int(entradas[3])
+
+    return [x1, y1, x2, y2]
 
 
 # ---------------------------------------- LAYOUT ---------------------------------------
@@ -51,6 +56,8 @@ layout = [[sg.Text("Olá! Este é o atualizador automático do CLICK e do DASH! 
           [sg.Text('Horizonal'), sg.InputText('1000', size=(6, 3)), sg.Text('Vertical'), sg.InputText('1000', size=(6, 3)), sg.Text(f'Coordenada Horizontal: {x0}', key='mousex')],
           [sg.Text('Coordenadas 2')],
           [sg.Text('Horizonal'), sg.InputText('1000', size=(6, 3)), sg.Text('Vertical'), sg.InputText('1000', size=(6, 3)), sg.Text(f'Coordenada Vertical: {y0}', key='mousey')],
+          [sg.Text('Temporização')],
+          [sg.Text('Tempo de Atualização (segundos)'), sg.InputText(f'{update_timer}', size=(6, 3))],
           [sg.Button("Rodar", size=(15, 2)), sg.Button("Parar", size=(15, 2)), sg.Button("Fechar", size=(15, 2))]]
 
 # Create the window
@@ -73,6 +80,10 @@ while True:
     # Starts scanning time!
     elif event == "Rodar":
         start_time = time.time()
+        pos1x, pos1y, pos2x, pos2y = update_coordinates(values)
+        update_timer = int(values[4])
+        print(update_timer)
+        print("Rodando!")
         flag = True
         window.perform_long_operation(auto_refresh, '-Operation Done-')
 
