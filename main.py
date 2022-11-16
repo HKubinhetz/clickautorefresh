@@ -23,9 +23,6 @@ update_timer = 300
 def auto_refresh():
     time.sleep(5)
 
-    # todo - criar uma rotina que configura onde clicar
-    # todo - criar uma rotina para configurar quanto tempo eu quero ter
-
     pyautogui.moveTo(pos1x, pos1y)
     pyautogui.click()
     pyautogui.press('f5')
@@ -49,6 +46,12 @@ def update_coordinates(entradas):
 
 # ---------------------------------------- LAYOUT ---------------------------------------
 sg.theme("GrayGrayGray")
+
+# TODO - Quantidade dinâmica de campos
+# TODO - Tela Configurações
+# TODO - File I/O com as coordenadas
+# TODO - Modo Clique/Duplo-Clique/Clique F5
+# TODO - Timer
 layout = [[sg.Text("Olá! Este é o atualizador automático do CLICK e do DASH! \n"
                    "Desenvolvido por Henrique Kubinhetz em Mar 2022 \n"
                    "e atualizado em Out 2022 \n")],
